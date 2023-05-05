@@ -36,7 +36,7 @@ defaults
         errorfile 504 /etc/haproxy/errors/504.http
 #HAproxy for web servers
 frontend web-frontend
-        bind *5000
+        bind *80
         mode http
         default_backend web-backend
 
@@ -46,5 +46,5 @@ backend web-backend
         http-request set-header X-Forwarded-Port %[dst_port]
         http-request add-header X-Forwarded-Proto https if { ssl_fc }
 {% for i in groups.webservers %}
-               server app{{ loop.index }} {{ i }}:5000 check
+               server app{{ loop.index }} {{ i }}:80 check
 {% endfor %}
