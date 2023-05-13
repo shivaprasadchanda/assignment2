@@ -1,13 +1,11 @@
-  hosts: webservers
-  become: true
-  
-  tasks:
-
 - name: Configure HAProxy
   hosts: HAproxy
   become: yes
 
   tasks:
+    - name: apt update
+      apt:
+        update_cache: yes
     - name: Install HAProxy
       apt:
         name: haproxy
@@ -18,10 +16,13 @@
         src: haproxy.cfg.j2
         dest: /etc/haproxy/haproxy.cfg
       become: yes
-
+ 
 - hosts: webservers
   become: yes
   tasks:
+    - name: apt update
+      apt:
+        update_cache: yes
     - name: Update apt cache
       apt:
         update_cache: yes
@@ -41,7 +42,7 @@
 
     - name: Change directory to flask-app
       shell: cd /home/ubuntu/flask-app
-        
+
     - name: Creating virtual environment
       file:
         path: /home/ubuntu/flask-app/venv
@@ -63,7 +64,7 @@
 
     - name: Copy Flask app file
       copy:
-        src: ./app.py
+        src: application2.py
         dest: /home/ubuntu/flask-app/venv/app.py
 
    
