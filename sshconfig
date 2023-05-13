@@ -1,5 +1,6 @@
 Host bastionNSO
   User ubuntu
+  HostName (ip address)
   IdentityFile ~/.ssh/id_rsa
   UserKnownHostsFile=~/dev/null
   StrictHostKeyChecking no
@@ -7,6 +8,7 @@ Host bastionNSO
 
 Host HAproxy
   User ubuntu
+  HostName (ip address)
   IdentityFile ~/.ssh/id_rsa
   UserKnownHostsFile=~/dev/null
   StrictHostKeyChecking no
@@ -14,17 +16,21 @@ Host HAproxy
 
 Host devA
   User ubuntu
+  HostName (ip address)
   ProxyJump bastionNSO
   StrictHostKeyChecking no
   PasswordAuthentication no
 
 Host devB
   User ubuntu
+  HostName (ip address)
   ProxyJump bastionNSO
   StrictHostKeyChecking no
   PasswordAuthentication no
 
 Host devC
   User ubuntu
-  HostName 91.106.198.49
+  HostName (ip address)
   ProxyJump bastionNSO
+  StrictHostKeyChecking no
+  PasswordAuthentication no
