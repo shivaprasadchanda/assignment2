@@ -1,6 +1,5 @@
 Host bastionNSO
   User ubuntu
-  HostName 89.42.141.186
   IdentityFile ~/.ssh/id_rsa
   UserKnownHostsFile=~/dev/null
   StrictHostKeyChecking no
