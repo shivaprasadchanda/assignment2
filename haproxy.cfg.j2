@@ -49,7 +49,7 @@ backend web-backend
                server app{{ loop.index }} {{ i }}:5000 check
 {% endfor %}
 listen stats
-    bind *:8404
+    bind *:5000
     stats enable
     stats uri /monito
     stats refresh 5s
