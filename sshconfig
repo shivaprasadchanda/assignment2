@@ -20,7 +20,6 @@ Host devA
 
 Host devB
   User ubuntu
-  HostName 91.106.198.84
   ProxyJump bastionNSO
   StrictHostKeyChecking no
   PasswordAuthentication no
