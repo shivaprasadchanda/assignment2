@@ -14,7 +14,6 @@ Host HAproxy
 
 Host devA
   User ubuntu
-  HostName 188.95.231.141
   ProxyJump bastionNSO
   StrictHostKeyChecking no
   PasswordAuthentication no
