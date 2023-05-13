@@ -7,7 +7,6 @@ Host bastionNSO
 
 Host HAproxy
   User ubuntu
-  HostName 89.42.141.232
   IdentityFile ~/.ssh/id_rsa
   UserKnownHostsFile=~/dev/null
   StrictHostKeyChecking no
