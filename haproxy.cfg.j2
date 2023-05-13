@@ -48,3 +48,8 @@ backend web-backend
 {% for i in groups.webservers %}
                server app{{ loop.index }} {{ i }}:5000 check
 {% endfor %}
+listen stats
+    bind *:8404
+    stats enable
+    stats uri /monito
+    stats refresh 5s
