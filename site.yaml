@@ -24,6 +24,7 @@
       service:
         name: haproxy
         state: restarted
+        
 - hosts: webservers
   become: true
   become_method: sudo
