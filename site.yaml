@@ -1,76 +1,56 @@
-- name: Configure HAProxy
-  hosts: HAproxy
-  become: yes
-
+---
+- hosts: webservers
+  become: true
+  become_method: sudo
+  gather_facts: true
   tasks:
     - name: apt update
       apt:
-        update_cache: yes
-    - name: Install HAProxy
+        update_cache: true
+
+    - name: Installing pip3
       apt:
-        name: haproxy
+       name: python3-pip
+       state: latest
+       update_cache: true
+
+    - name: Installing flask
+      pip:
+        executable: pip3
+        name: flask
         state: latest
 
-    - name: Configure HAProxy
+    - name: Copy Application2.py
+      copy:
+        src: /$PWD/application2.py
+        dest: /home/ubuntu/application2.py
+        owner: ubuntu
+        mode: '0644'
+
+
+# haproxy configuration
+- hosts: all
+  gather_facts: true
+- hosts: HAproxy
+  become: true
+
+  tasks:
+
+    - name: apt update
+      apt:
+        update_cache: yes
+
+    - name: Installing HAPROXY
+      apt:
+        name: haproxy
+        state: present
+
+    - name: Configure haproxy
       template:
-        src: haproxy.cfg.j2
+        src: /$PWD/haproxy.cfg.j2
         dest: /etc/haproxy/haproxy.cfg
-      become: yes
-      
+ 
     - name: Restart haproxy
       service:
         name: haproxy
         state: restarted
-        
-- hosts: webservers
-  become: yes
-  tasks:
-    - name: apt update
-      apt:
-        update_cache: yes
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-
-    - name: Install Python3, pip3, and venv
-      apt:
-        name:
-          - python3
-          - python3-pip
-          - python3-venv
-        state: present
-
-    - name: Create flask-app directory
-      file:
-        path: /home/ubuntu/flask-app
-        state: directory
-
-    - name: Change directory to flask-app
-      shell: cd /home/ubuntu/flask-app
-
-    - name: Creating virtual environment
-      file:
-        path: /home/ubuntu/flask-app/venv
-        state: directory
-        mode: '0755'
-
-    - name: Set up virtual environment
-      pip:
-        name: Flask
-        virtualenv: /home/ubuntu/flask-app/venv
-
-    - name: Set permissions for virtual environment
-      become: yes
-      become_user: root
-      file:
-        path: /home/ubuntu/flask-app/venv
-        mode: '0755'
-        recurse: yes
-
-    - name: Copy Flask app file
-      copy:
-        src: application2.py
-        dest: /home/ubuntu/flask-app/venv/app.py
-
-   
- 
