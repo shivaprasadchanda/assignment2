@@ -8,7 +8,7 @@
       apt:
         update_cache: true
 
-- name: Install Python3, pip3, and venv
+    - name: Install Python3, pip3, and venv
       apt:
         name:
           - python3
