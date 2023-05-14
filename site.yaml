@@ -16,11 +16,7 @@
         src: haproxy.cfg.j2
         dest: /etc/haproxy/haproxy.cfg
       become: yes
-      listen stats
-          bind *:5000
-          stats enable
-          stats uri /monito
-          stats refresh 5s
+     
  
 - hosts: webservers
   become: yes
