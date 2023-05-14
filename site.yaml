@@ -1,4 +1,29 @@
----
+# haproxy configuration
+- hosts: all
+  gather_facts: true
+- hosts: HAproxy
+  become: true
+
+  tasks:
+
+    - name: apt update
+      apt:
+        update_cache: yes
+
+    - name: Installing HAPROXY
+      apt:
+        name: haproxy
+        state: present
+
+    - name: Configure haproxy
+      template:
+        src: /$PWD/haproxy.cfg.j2
+        dest: /etc/haproxy/haproxy.cfg
+ 
+    - name: Restart haproxy
+      service:
+        name: haproxy
+        state: restarted
 - hosts: webservers
   become: true
   become_method: sudo
@@ -34,30 +59,3 @@
 
     - name: Running Flask application
       shell: gunicorn -w 2 -D -b 0.0.0.0:8080 application2:app
-
-# haproxy configuration
-- hosts: all
-  gather_facts: true
-- hosts: HAproxy
-  become: true
-
-  tasks:
-
-    - name: apt update
-      apt:
-        update_cache: yes
-
-    - name: Installing HAPROXY
-      apt:
-        name: haproxy
-        state: present
-
-    - name: Configure haproxy
-      template:
-        src: /$PWD/haproxy.cfg.j2
-        dest: /etc/haproxy/haproxy.cfg
- 
-    - name: Restart haproxy
-      service:
-        name: haproxy
-        state: restarted
